@@ -6,3 +6,7 @@
 	path = reveal.js-menu
 	url = https://github.com/denehyg/reveal.js-menu
 	branch = master
+[submodule "raftscope-replay"]
+	path = raftscope-replay
+	url = https://github.com/ongardie/raftscope/
+	branch = replay
