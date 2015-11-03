@@ -498,6 +498,15 @@ mailing list
         controls: false,
         slideNumber: true,
 
+        // Menu plugin configuration (jump to slide by title)
+        menu: {
+          numbers: true,
+          markers: true,
+          themes: false,
+          transitions: false,
+          openSlideNumber: true,
+        },
+
         dependencies: [
           // Interpret Markdown in <section> elements
           { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
@@ -505,7 +514,9 @@ mailing list
           // Syntax highlighting for <code> elements
           { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
           // Speaker notes (press 's')
-          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+          { src: 'reveal.js/plugin/notes/notes.js', async: true },
+          // Menu plugin (jump to slide by title)
+          { src: 'reveal.js-menu/menu.js' },
         ],
       });
 

@@ -2,3 +2,7 @@
 	path = reveal.js
 	url = https://github.com/hakimel/reveal.js/
 	branch = master
+[submodule "reveal.js-menu"]
+	path = reveal.js-menu
+	url = https://github.com/denehyg/reveal.js-menu
+	branch = master
