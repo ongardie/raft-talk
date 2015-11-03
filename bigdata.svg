@@ -8,10 +8,34 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    width="828.13159"
    height="266.336"
-   id="svg3194">
+   id="svg3194"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="bigdata.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1750"
+     inkscape:window-height="1417"
+     id="namedview42"
+     showgrid="false"
+     inkscape:zoom="1.6018376"
+     inkscape:cx="289.20919"
+     inkscape:cy="133.168"
+     inkscape:window-x="808"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g5197" />
   <defs
      id="defs3196">
     <marker
@@ -59,7 +83,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -196,9 +220,10 @@
          id="tspan4108-0"
          style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L">2PC</tspan></text>
     <path
-       d="m 198.21924,88.975319 c 0,0 4.39563,26.194471 31.53292,26.234871 27.13729,0.0404 31.53291,-26.085891 31.53291,-26.085891"
+       d="m 261.2832,88.975319 c 0,0 -4.39563,26.194471 -31.53292,26.234871 -27.13729,0.0404 -31.53291,-26.085891 -31.53291,-26.085891"
        id="path3123"
-       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#TriangleInM);marker-end:url(#TriangleOutM)" />
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#TriangleInM);marker-end:url(#TriangleOutM)"
+       inkscape:connector-curvature="0" />
     <g
        transform="translate(-8.3076913,0)"
        id="g5197">
@@ -213,13 +238,15 @@
            id="tspan5193"
            style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L">2PC</tspan></text>
       <path
-         d="m 475.38642,88.975319 c 0,0 7.57858,26.194471 54.36644,26.234871 46.78786,0.0404 54.36642,-26.085891 54.36642,-26.085891"
+         d="m 584.11581,88.975319 c 0,0 -7.57858,26.194471 -54.36644,26.234871 -46.78786,0.0404 -54.36642,-26.085891 -54.36642,-26.085891"
          id="path5195"
-         style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#TriangleInM);marker-end:url(#TriangleOutM)" />
+         style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#TriangleInM);marker-end:url(#TriangleOutM)"
+         inkscape:connector-curvature="0" />
       <path
-         d="m 210.69902,-54.69098 c 0,0 25.36462,-26.194474 181.95813,-26.234874 156.5935,-0.0404 181.95806,26.085894 181.95806,26.085894"
+         d="m 574.62168,-54.69098 c 0,0 -25.36462,-26.19447 -181.95813,-26.23487 -156.5935,-0.0404 -181.95806,26.08589 -181.95806,26.08589"
          id="path5202"
-         style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#TriangleInM);marker-end:url(#TriangleOutM)" />
+         style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#TriangleInM);marker-end:url(#TriangleOutM)"
+         inkscape:connector-curvature="0" />
       <text
          x="388.92218"
          y="-86.539963"
