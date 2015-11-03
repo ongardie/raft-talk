@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Raft</title>
+
+    <meta name="description" content="The Raft Consensus Algorithm">
+    <meta name="author" content="Diego Ongaro">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/white.css" id="theme">
+
+    <style>
+.left {
+  text-align: left;
+}
+ul.left {
+  display: block;
+  padding-left: 2em;
+}
+.reveal section img {
+  border: 0;
+  box-shadow: none;
+}
+@media print {
+.reveal blockquote {
+  box-shadow: none;
+  background: inherit;
+}
+} /* end @media print */
+.reveal em {
+  color: #1b91ff;
+  font-style: normal;
+}
+
+.reveal h1 {
+  font-size: 2.4em;
+}
+
+.reveal h2 {
+  font-size: 1.8em;
+}
+
+.reveal ol li {
+  font-weight: bold;
+}
+
+.reveal ol li ul {
+  font-weight: normal;
+}
+
+.reveal ol li ul li {
+  font-weight: normal;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  text-transform: none;
+}
+    </style>
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+<section>
+<a href="https://raft.github.io"><img src="raft.png" style="margin: 0; width: 200px; box-shadow: none" /></a>
+
+<h2>The Raft Consensus Algorithm</h2>
+
+<h4>Diego Ongaro and John Ousterhout</h4>
+<h4>November 2015</h4>
+
+<div>
+<img src="stanford.png" style="padding: 0 40px" />
+<img src="salesforce.png" style="padding: 0 40px; height: 75px"/>
+</div>
+
+<p style="font-size: .4em; clear: both;">
+  Source code available at <a href="https://github.com/ongardie/raft-talk">https://github.com/ongardie/raft-talk</a>.
+  <br />
+  Unless otherwise noted, this work is:
+  <br />
+  &copy; 2012-2015 Diego Ongaro,
+  &copy; 2012-2014 John Ousterhout.
+  <br />
+  Licensed under the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  <br />
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img style="margin: 2px; border: 0; box-shadow: none" alt="Creative Commons License" style="border-width:0" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAIAAAD8q9/YAAAABGdBTUEAANbY1E9YMgAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAISSURBVHjaYmAYYYARiP///z9SfMvIyAJhrdm0Glliz669M6fO7OjoKC8vx9Tm6up66tSptu5WcQlxIFdeVsHVyfXjh4+D3LeQeGXClHj54uXyxctx+RYIdu/ebWZmNrl/CoT74eOHwoLCoRLJWDy8fMkKYWFhXL6FAGBw3Lxxc8PajUD2x08fPHw8vH28h6qHL128lJ6eDmScPXtWWVkZmO6Bafj9+/dAEsgGigDFjY2NXVxcrl29BjWFiQnIRUs/EICcnDDZA+/hSxcvf/70GegfIDssLAzIALoPSHZ2dgL9+e7dO2DM37t3DygLFLxz+w48VQMTOWYJAQQQ78EZQBLIHkQe/vrlC5AUFBQERinQYxCfAxMwkK2kpAQUT0tLCw0NhRXxUKf//PmDkYURs5BA9h7EzwPrWywe5ubhAZJA3wL9BvQhMFYhxTKQC/QzULyiomLWrFloiZOdneP/n/94Ynjw5mE9fV1eXl6IP4ERu2fPHqCjgT4HsoGxLSQkBBSBZNczZ84oKitCdAnwCwArKvwxPLgaHsj1cF9X//Onz+/fv49HGzBETExMouOiA4L9gVxZabnmhuatW7YO8noYGPpYSunouKi3b98AoxSP5rKyMhVVZYhv+fkEdmzZMch9i69aArafUjNTKysr29vbsepxcna6fv16QUkBPD33T+gfbUsP0rb0SOssMQAEGAB0zfzj5yHE/QAAAABJRU5ErkJggg==" /></a>
+</p>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Motivation
+- Goal: shared key-value store (state machine)
+- Host it on a single machine attached to network
+    - Pros: easy, consistent
+    - Cons: prone to failure
+- With Raft, keep consistency yet deal with failures
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## What Is Consensus
+
+- Agreement on shared state (single system image)
+- Recovers from server failures autonomously
+    - Minority of servers fail: no problem
+    - Majority fail: lose availability, retain consistency
+  <center><img src="consensus-servers.svg" /></center>
+- Key to building consistent storage systems
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Replicated State Machines
+
+Typical architecture for consensus systems
+
+<img src="rsm.svg" />
+
+- <em>Replicated log</em> &rArr; replicated state machine
+    - All servers execute same commands in same order
+- Consensus module ensures proper log replication
+- System makes progress as long as any majority of servers up
+- Failure model: fail-stop (not Byzantine), delayed/lost msgs
+</script>
+</section>
+
+
+<section>
+<h2>Paxos Protocol</h2>
+
+<ul>
+<li>Leslie Lamport, 1989</li>
+<li>Nearly synonymous with consensus</li>
+</ul>
+
+<blockquote class="fragment">
+&ldquo;The dirty little secret of the NSDI community is that at
+most five people really, truly understand every part of
+Paxos ;-).&rdquo; <br /><small>&mdash;NSDI reviewer</small>
+</blockquote>
+
+<blockquote class="fragment">
+<b>&ldquo;</b>There are significant gaps between the description of
+the Paxos algorithm and the needs of a real-world
+system...the final system will be based on an unproven
+protocol.<b>&rdquo;</b> <br /><small>&mdash;Chubby authors</small>
+</blockquote>
+
+</script>
+</section>
+
+
+<section>
+<h2>How Is Consensus Used?</h2>
+
+<p class="fragment" style="margin: 0">
+Top-level system configuration
+<br />
+<img style="height: 200px" src="activeactive.svg" />
+<img style="height: 200px" src="activepassive.svg" />
+</p>
+
+<p class="fragment" style="margin: 0">
+Replicate entire database state
+<br />
+<img style="height: 200px" src="bigdata.svg" />
+</p>
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Raft
+- Algorithm for implementing a replicated log
+- System makes progress as long as any majority of servers up
+- Failure model: fail-stop (not Byzantine), delayed/lost msgs
+- Designed for <em>understandability</em>
+</script>
+</section>
+
+<section>
+<h2>Raft's Design for Understandability</h2>
+
+<p class="left">
+<strong>
+We wanted an algorithm optimized for building real systems
+</strong>
+<ul class="left">
+<li>Must be correct, complete, and perform well
+<li>Must also be <em>understandable</em>
+</ul>
+</p>
+
+<p class="left">
+<strong>
+&ldquo;What would be easier to understand or explain?&rdquo;
+</strong>
+<ul class="left">
+<li>Fundamentally different decomposition than Paxos</li>
+<li>Less complexity in state space</li>
+<li>Less mechanism</li>
+</ul>
+</p>
+</section>
+
+
+<section>
+<h2>Raft User Study</h2>
+
+<img style="width: 40%;" src="studyscatter.svg">
+<img style="width: 40%;" class="fragment" src="survey.svg">
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Raft Overview
+
+1. Leader election
+    - Select one of the servers to act as cluster leader
+    - Detect crashes, choose new leader
+2. Log replication (normal operation)
+    - Leader takes commands from clients, appends to its log
+    - Leader replicates its log to other servers (overwriting
+      inconsistencies)
+3. Safety
+    - Only a server with an up-to-date log can become leader
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## [RaftScope Visualization](https://raft.github.io/raftscope-replay/)
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Core Raft Review
+
+1. Leader election
+    - Heartbeats and timeouts to detect crashes
+    - Randomized timeouts to avoid split votes
+    - Majority voting to guarantee at most one leader per term
+2. Log replication (normal operation)
+    - Leader takes commands from clients, appends to its log
+    - Leader replicates its log to other servers (overwriting
+      inconsistencies)
+    - Built-in consistency check simplifies how logs may differ
+3. Safety
+    - Only elect leaders with all committed entries in their logs
+    - New leader defers committing entries from prior terms
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Randomized Timeouts
+
+- How much randomization is needed to avoid split votes?
+
+<img src="timeoutcdf.svg">
+
+- Conservatively, use random range ~10x network latency
+
+</script>
+</section>
+
+<section>
+<h2>Raft Implementations</h2>
+
+<small>
+<table id="implementations" class="table table-striped table-hover">
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Primary Authors</th>
+  <th>Language</th>
+  <th>License</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><a href="https://github.com/rethinkdb/rethinkdb">RethinkDB/clustering</a></td>
+  <td></td>
+  <td>C++</td>
+  <td>AGPL</td>
+</tr><tr>
+  <td><a href="https://github.com/coreos/etcd">etcd/raft</a></td>
+  <td>Blake Mizerany, Xiang Li and Yicheng Qin</td>
+  <td>Go</td>
+  <td>Apache 2.0</td>
+</tr><tr>
+  <td><a href="https://github.com/logcabin/logcabin">LogCabin</a></td>
+  <td><a href="https://twitter.com/ongardie">Diego Ongaro</a> (Stanford)</td>
+  <td>C++</td>
+  <td>ISC</td>
+</tr><tr>
+  <td><a href="https://github.com/goraft/raft">go-raft</a></td>
+  <td><a href="https://twitter.com/benbjohnson">Ben Johnson </a>(Sky) and <a href="https://twitter.com/xiangli0227">Xiang Li</a> (CMU, CoreOS)</td>
+  <td>Go</td>
+  <td>MIT</td>
+</tr><tr>
+  <td><a href="https://github.com/hashicorp/raft">hashicorp/raft</a></td>
+  <td><a href="https://twitter.com/armon">Armon Dadgar</a> (hashicorp)</td>
+  <td>Go</td>
+  <td>MPL-2.0</td>
+</tr><tr>
+  <td><a href="https://github.com/Hoverbear/raft">hoverbear/raft</a></td>
+  <td>
+    <a href="https://twitter.com/andrewhobden">Andrew Hobden</a>,
+    Dan Burkert
+  </td>
+  <td>Rust</td>
+  <td>MIT</td>
+</tr><tr>
+  <td><a href="https://github.com/pablosmedina/ckite">ckite</a></td>
+  <td><a href="https://twitter.com/pablosmedina">Pablo Medina</a></td>
+  <td>Scala</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/uwplse/verdi">verdi/raft</a></td>
+  <td>James Wilcox, Doug Woos, Pavel Panchekha, Zach Tatlock, Xi Wang, Mike
+      Ernst, and Tom Anderson (University of Washington)</td>
+  <td>Coq</td>
+  <td>BSD</td>
+</tr><tr>
+  <td><a href="https://github.com/opendaylight/controller">OpenDaylight</a></td>
+  <td>Moiz Raja, Kamal Rameshan, Robert Varga (Cisco), Tom Pantelis (Brocade)</td>
+  <td>Java</td>
+  <td>Eclipse</td>
+</tr><tr>
+  <td><a href="https://github.com/dreyk/zraft_lib">zraft_lib</a></td>
+  <td>Gunin Alexander</td>
+  <td>Erlang</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/kanaka/raft.js">kanaka/raft.js</a></td>
+  <td><a href="https://twitter.com/bus_kanaka">Joel Martin</a></td>
+  <td>Javascript</td>
+  <td>MPL-2.0</td>
+</tr><tr>
+  <td><a href="https://github.com/ktoso/akka-raft">akka-raft</a></td>
+  <td><a href="https://twitter.com/ktosopl">Konrad Malawski</a></td>
+  <td>Scala</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/andrewjstone/rafter">rafter</a></td>
+  <td><a href="https://twitter.com/andrew_j_stone">Andrew Stone</a> (Basho)</td>
+  <td>Erlang</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/celluloid/floss">floss</a></td>
+  <td><a href="https://twitter.com/aflatter">Alexander Flatter</a></td>
+  <td>Ruby</td>
+  <td>MIT</td>
+</tr><tr>
+  <td><a href="https://github.com/willemt/raft">willemt/raft</a></td>
+  <td><a href="https://twitter.com/willemht">Willem-Hendrik Thiart</a></td>
+  <td>C</td>
+  <td>BSD</td>
+</tr><tr>
+  <td>...</td>
+  <td>...</td>
+  <td>...</td>
+  <td>...</td>
+</tr>
+</tbody>
+</table>
+
+<p>Copied from Raft website, probably stale.</p>
+
+</small>
+</section>
+
+
+<section>
+<h2>LogCabin</h2>
+
+<ul>
+<li>Started as research platform for Raft at Stanford</li>
+<li>Developed into production system at Scale Computing</li>
+<li>Network service running Raft replicated state machine</li>
+<li>Data model: hierarchical key-value store, kept in memory</li>
+<li>Written in C++ <small>(<a href="https://gcc.gnu.org/projects/cxx0x.html">gcc 4.4's C++0x</a>)</small></li>
+</ul>
+
+<a href="https://github.com/logcabin/logcabin/"><img style="float:right; width: 500px" src="logcabin.svg" /></a>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Conclusion
+
+- Consensus widely regarded as difficult
+- Raft designed for understandability
+    - Easier to teach in classrooms
+    - Better foundation for building practical systems
+- Pieces needed for a practical system:
+    - Cluster membership changes <small>(simpler in dissertation)</small>
+    - Log compaction <small>(expanded tech report/dissertation)</small>
+    - Client interaction <small>(expanded tech report/dissertation)</small>
+    - Evaluation <small>(dissertation: understandability, correctness,
+      leader election & replication performance)</small>
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+
+# Questions
+
+<p>
+<a href="https://raft.github.io">raft.github.io</a>
+</p>
+
+<p>
+<a href="https://groups.google.com/forum/#!forum/raft-dev">raft-dev</a>
+mailing list
+</p>
+
+<img src="raft.png" style="margin: 0; width: 300px" />
+
+</script>
+</section>
+
+      </div> <!-- slides -->
+
+    </div> <!-- reveal -->
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1270,
+        height: 768,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.05,
+
+        // slide transitions: none/fade/slide/convex/concave/zoom
+        transition: 'none', 
+
+        controls: false,
+        slideNumber: true,
+
+        dependencies: [
+          // Interpret Markdown in <section> elements
+          { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          // Syntax highlighting for <code> elements
+          { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          // Speaker notes (press 's')
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ],
+      });
+
+    </script>
+
+  </body>
+</html>
