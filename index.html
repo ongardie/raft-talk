@@ -190,7 +190,7 @@ protocol.<b>&rdquo;</b> <br /><small>&mdash;Chubby authors</small>
 </section>
 
 
-<section>
+<section data-move-to="backup">
 <h2>How Is Consensus Used?</h2>
 
 <p class="fragment" style="margin: 0">
@@ -209,7 +209,7 @@ Replicate entire database state
 </script>
 </section>
 
-<section data-markdown>
+<section data-move-to="backup" data-markdown>
 <script type="text/template">
 ## Raft
 - Algorithm for implementing a replicated log
@@ -245,7 +245,7 @@ We wanted an algorithm optimized for building real systems
 </section>
 
 
-<section>
+<section data-move-to="backup">
 <h2>Raft User Study</h2>
 
 <img style="width: 40%;" src="studyscatter.svg">
@@ -299,7 +299,7 @@ or [https://raft.github.io/raftscope-replay/](https://raft.github.io/raftscope-r
 </script>
 </section>
 
-<section data-markdown>
+<section data-move-to="backup" data-markdown>
 <script type="text/template">
 ## Randomized Timeouts
 
@@ -419,7 +419,7 @@ or [https://raft.github.io/raftscope-replay/](https://raft.github.io/raftscope-r
 </section>
 
 
-<section>
+<section data-move-to="backup">
 <h2>LogCabin</h2>
 
 <ul>
@@ -471,9 +471,31 @@ mailing list
 </script>
 </section>
 
+<div data-move-target="backup"></div>
+
       </div> <!-- slides -->
 
     </div> <!-- reveal -->
+
+    <script src="jquery/jquery.min.js"></script>
+    <script>
+       // Move anything with data-move-to="foo" after data-move-target="foo".
+       // Used to move slides to the end of the presentation (backup slides)
+       // without moving them in the source file.
+       // Only enabled if "move-slides" appears in the query string.
+       var moveSlides = function() {
+         $('[data-move-target]').each(function(i, target) {
+           console.log(target);
+           target = $(target);
+           console.log(target);
+           var name = target.attr('data-move-target');
+           target.after($('[data-move-to="' + name + '"]'));
+         });
+       };
+       if (location.search.indexOf('move-slides') != -1) {
+         moveSlides();
+       }
+    </script>
 
     <script src="reveal.js/lib/js/head.min.js"></script>
     <script src="reveal.js/js/reveal.js"></script>
