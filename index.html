@@ -485,14 +485,13 @@ mailing list
        // Only enabled if "move-slides" appears in the query string.
        var moveSlides = function() {
          $('[data-move-target]').each(function(i, target) {
-           console.log(target);
            target = $(target);
-           console.log(target);
            var name = target.attr('data-move-target');
            target.after($('[data-move-to="' + name + '"]'));
          });
        };
-       if (location.search.indexOf('move-slides') != -1) {
+       if (location.search.indexOf('move-slides') != -1 ||
+           location.toString().indexOf('raft-talk-archive') != -1) {
          moveSlides();
        }
     </script>
