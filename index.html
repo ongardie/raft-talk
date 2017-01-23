@@ -122,7 +122,7 @@ ul.left {
 </section>
 
 
-<section data-markdown>
+<section data-markdown data-move-to="backup">
 <script type="text/template">
 ## Motivation
 - Goal: shared key-value store (state machine)
@@ -166,6 +166,25 @@ Typical architecture for consensus systems
 
 
 <section>
+<h2>How Is Consensus Used?</h2>
+
+<p class="fragment" style="margin: 0">
+Top-level system configuration
+<br />
+<img style="height: 200px" src="activeactive.svg" />
+<img style="height: 200px" src="activepassive.svg" />
+</p>
+
+<p class="fragment" style="margin: 0">
+Replicate entire database state
+<br />
+<img style="height: 200px" src="bigdata.svg" />
+</p>
+
+</script>
+</section>
+
+<section>
 <h2>Paxos Protocol</h2>
 
 <ul>
@@ -189,25 +208,6 @@ protocol.<b>&rdquo;</b> <br /><small>&mdash;Chubby authors</small>
 </script>
 </section>
 
-
-<section data-move-to="backup">
-<h2>How Is Consensus Used?</h2>
-
-<p class="fragment" style="margin: 0">
-Top-level system configuration
-<br />
-<img style="height: 200px" src="activeactive.svg" />
-<img style="height: 200px" src="activepassive.svg" />
-</p>
-
-<p class="fragment" style="margin: 0">
-Replicate entire database state
-<br />
-<img style="height: 200px" src="bigdata.svg" />
-</p>
-
-</script>
-</section>
 
 <section data-move-to="backup" data-markdown>
 <script type="text/template">
@@ -245,7 +245,7 @@ We wanted an algorithm optimized for building real systems
 </section>
 
 
-<section data-move-to="backup">
+<section>
 <h2>Raft User Study</h2>
 
 <img style="width: 40%;" src="studyscatter.svg">
@@ -299,7 +299,7 @@ or [https://raft.github.io/raftscope-replay/](https://raft.github.io/raftscope-r
 </script>
 </section>
 
-<section data-move-to="backup" data-markdown>
+<section data-markdown>
 <script type="text/template">
 ## Randomized Timeouts
 
@@ -312,7 +312,7 @@ or [https://raft.github.io/raftscope-replay/](https://raft.github.io/raftscope-r
 </script>
 </section>
 
-<section data-move-to="backup">
+<section>
 <h2>Raft Implementations</h2>
 
 <small>
@@ -451,6 +451,7 @@ or [https://raft.github.io/raftscope-replay/](https://raft.github.io/raftscope-r
 <script type="text/template">
 ## Conclusion
 
+- Consensus useful for both coordination and data management
 - Consensus widely regarded as difficult
 - Raft designed for understandability
     - Easier to teach in classrooms
