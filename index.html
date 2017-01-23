@@ -100,7 +100,7 @@ ul.left {
 <h2>The Raft Consensus Algorithm</h2>
 
 <h4>Diego Ongaro and John Ousterhout</h4>
-<h4>November 2015</h4>
+<h4>January 2017</h4>
 
 <div>
 <img src="stanford.png" style="padding: 0 40px" />
@@ -112,7 +112,7 @@ ul.left {
   <br />
   Unless otherwise noted, this work is:
   <br />
-  &copy; 2012-2015 Diego Ongaro,
+  &copy; 2012-2017 Diego Ongaro,
   &copy; 2012-2014 John Ousterhout.
   <br />
   Licensed under the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
@@ -325,31 +325,80 @@ or [https://raft.github.io/raftscope-replay/](https://raft.github.io/raftscope-r
   <th>License</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
+  <td><a href="https://github.com/coreos/etcd">etcd/raft</a></td>
+  <td>Xiang Li and Yicheng Qin</td>
+  <td>Go</td>
+  <td>Apache 2.0</td>
+</tr><tr>
   <td><a href="https://github.com/rethinkdb/rethinkdb">RethinkDB/clustering</a></td>
   <td></td>
   <td>C++</td>
   <td>AGPL</td>
 </tr><tr>
-  <td><a href="https://github.com/coreos/etcd">etcd/raft</a></td>
-  <td>Blake Mizerany, Xiang Li and Yicheng Qin</td>
+  <td><a href="https://github.com/pingcap/tikv">TiKV</a></td>
+  <td>
+    <a href="https://github.com/BusyJay">Jay</a>,
+    <a href="https://github.com/ngaut">ngaut</a>,
+    <a href="https://twitter.com/siddontang">siddontang</a>,
+    <a href="https://github.com/tiancaiamao">tiancaiamao</a>.
+  </td>
+  <td>Rust</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/hashicorp/raft">hashicorp/raft</a></td>
+  <td><a href="https://twitter.com/armon">Armon Dadgar</a></td>
   <td>Go</td>
-  <td>Apache 2.0</td>
+  <td>MPL-2.0</td>
+</tr><tr>
+  <td><a href="https://github.com/atomix/copycat">copycat</a></td>
+  <td><a href="https://twitter.com/definekuujo">Jordan Halterman</a></td>
+  <td>Java</td>
+  <td>Apache2</td>
 </tr><tr>
   <td><a href="https://github.com/logcabin/logcabin">LogCabin</a></td>
-  <td><a href="https://twitter.com/ongardie">Diego Ongaro</a> (Stanford)</td>
+  <td><a href="https://twitter.com/ongardie">Diego Ongaro</a></td>
   <td>C++</td>
   <td>ISC</td>
 </tr><tr>
-  <td><a href="https://github.com/goraft/raft">go-raft</a></td>
-  <td><a href="https://twitter.com/benbjohnson">Ben Johnson </a>(Sky) and <a href="https://twitter.com/xiangli0227">Xiang Li</a> (CMU, CoreOS)</td>
-  <td>Go</td>
-  <td>MIT</td>
+  <td><a href="https://github.com/apache/incubator-kudu">Kudu</a></td>
+  <td>
+    <a href="https://twitter.com/dribeiroalves">David Alves</a>,
+    <a href="https://twitter.com/tlipcon">Todd Lipcon</a>,
+    <a href="https://twitter.com/mike_percy">Mike Percy</a></td>
+  <td>C++</td>
+  <td>Apache2</td>
 </tr><tr>
-  <td><a href="https://github.com/hashicorp/raft">hashicorp/raft</a></td>
-  <td><a href="https://twitter.com/armon">Armon Dadgar</a> (hashicorp)</td>
+  <td><a href="https://github.com/andrewjstone/rafter">rafter</a></td>
+  <td><a href="https://twitter.com/andrew_j_stone">Andrew Stone</a></td>
+  <td>Erlang</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/ktoso/akka-raft">akka-raft</a></td>
+  <td><a href="https://twitter.com/ktosopl">Konrad Malawski</a></td>
+  <td>Scala</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/opendaylight/controller">OpenDaylight</a></td>
+  <td>Moiz Raja, Kamal Rameshan, Robert Varga, Tom Pantelis</td>
+  <td>Java</td>
+  <td>Eclipse</td>
+</tr><tr>
+  <td><a href="https://github.com/dreyk/zraft_lib">zraft_lib</a></td>
+  <td>Gunin Alexander</td>
+  <td>Erlang</td>
+  <td>Apache2</td>
+</tr><tr>
+  <td><a href="https://github.com/willemt/raft">willemt/raft</a></td>
+  <td><a href="https://twitter.com/willemht">Willem-Hendrik Thiart</a></td>
+  <td>C</td>
+  <td>BSD</td>
+</tr><tr>
+  <td><a href="https://github.com/peterbourgon/raft">peterbourgon/raft</a></td>
+  <td><a href="https://twitter.com/peterbourgon">Peter Bourgon</a></td>
   <td>Go</td>
-  <td>MPL-2.0</td>
+  <td>Simplified BSD</td>
 </tr><tr>
   <td><a href="https://github.com/Hoverbear/raft">hoverbear/raft</a></td>
   <td>
@@ -359,51 +408,15 @@ or [https://raft.github.io/raftscope-replay/](https://raft.github.io/raftscope-r
   <td>Rust</td>
   <td>MIT</td>
 </tr><tr>
-  <td><a href="https://github.com/pablosmedina/ckite">ckite</a></td>
-  <td><a href="https://twitter.com/pablosmedina">Pablo Medina</a></td>
-  <td>Scala</td>
-  <td>Apache2</td>
-</tr><tr>
-  <td><a href="https://github.com/uwplse/verdi">verdi/raft</a></td>
-  <td>James Wilcox, Doug Woos, Pavel Panchekha, Zach Tatlock, Xi Wang, Mike
-      Ernst, and Tom Anderson (University of Washington)</td>
-  <td>Coq</td>
-  <td>BSD</td>
-</tr><tr>
-  <td><a href="https://github.com/opendaylight/controller">OpenDaylight</a></td>
-  <td>Moiz Raja, Kamal Rameshan, Robert Varga (Cisco), Tom Pantelis (Brocade)</td>
-  <td>Java</td>
-  <td>Eclipse</td>
-</tr><tr>
-  <td><a href="https://github.com/dreyk/zraft_lib">zraft_lib</a></td>
-  <td>Gunin Alexander</td>
-  <td>Erlang</td>
-  <td>Apache2</td>
-</tr><tr>
-  <td><a href="https://github.com/kanaka/raft.js">kanaka/raft.js</a></td>
-  <td><a href="https://twitter.com/bus_kanaka">Joel Martin</a></td>
-  <td>Javascript</td>
-  <td>MPL-2.0</td>
-</tr><tr>
-  <td><a href="https://github.com/ktoso/akka-raft">akka-raft</a></td>
-  <td><a href="https://twitter.com/ktosopl">Konrad Malawski</a></td>
-  <td>Scala</td>
-  <td>Apache2</td>
-</tr><tr>
-  <td><a href="https://github.com/andrewjstone/rafter">rafter</a></td>
-  <td><a href="https://twitter.com/andrew_j_stone">Andrew Stone</a> (Basho)</td>
-  <td>Erlang</td>
-  <td>Apache2</td>
-</tr><tr>
-  <td><a href="https://github.com/celluloid/floss">floss</a></td>
-  <td><a href="https://twitter.com/aflatter">Alexander Flatter</a></td>
-  <td>Ruby</td>
+  <td><a href="https://github.com/zhebrak/raftos">raftos</a></td>
+  <td><a href="https://github.com/zhebrak/">Alexander Zhebrak</a></td>
+  <td>Python</td>
   <td>MIT</td>
 </tr><tr>
-  <td><a href="https://github.com/willemt/raft">willemt/raft</a></td>
-  <td><a href="https://twitter.com/willemht">Willem-Hendrik Thiart</a></td>
-  <td>C</td>
-  <td>BSD</td>
+  <td><a href="https://github.com/belaban/jgroups-raft">jgroups-raft</a></td>
+  <td>Bela Ban</td>
+  <td>Java</td>
+  <td>Apache2</td>
 </tr><tr>
   <td>...</td>
   <td>...</td>
@@ -517,7 +530,7 @@ mailing list
         margin: 0.05,
 
         // slide transitions: none/fade/slide/convex/concave/zoom
-        transition: 'none', 
+        transition: 'none',
 
         controls: false,
         slideNumber: true,
